@@ -50,13 +50,13 @@ float getwaterPres(float volt) {
 
 // Water Pressure Sensor
 void waterPressure(byte signalPin) {
-  for (unsigned int i = 0UL; i < N; ++i) {    // Get samples for smooth the value
+  for (unsigned int i = 0UL; i < N; ++i) {      // Get samples for smooth the value
     vOut = vOut + analogRead(signalPin);
-    delay(1);                                 // delay in between reads for stability
+    delay(1UL);                                 // delay in between reads for stability
   }
-  vOut = (vOut * vConv) / N;                  // ADC of voltage meter output voltage
+  vOut = (vOut * vConv) / N;                    // ADC of voltage meter output voltage
 
-  waterPres = getwaterPres(vOut);             // Calculate water pressure
+  waterPres = getwaterPres(vOut);              // Calculate water pressure
 
   if (isinf(waterPres) || isnan(waterPres)) {
     waterPres = -1;
@@ -89,11 +89,11 @@ void loop(void) {
     Serial.print(vOut, 12);
     // Unit converter for pressure, raw unit: MPa
     Serial.print("Pressure: ");
-    Serial.print(waterPres * 1000, 1);    // 1 : 1000
+    Serial.print(waterPres * 1000.0f, 1);    // 1 : 1000
     Serial.print(" kPa, ");
-    Serial.print(waterPres, 2);           // Raw
+    Serial.print(waterPres, 2);              // Raw
     Serial.print(" MPa, ");
-    Serial.print(waterPres * 10.1972, 1); // 1 : 10.1972
+    Serial.print(waterPres * 10.1972f, 1);   // 1 : 10.1972
     Serial.print(" kg/cm^2, ");
 
     /*--- System Return ---*/
