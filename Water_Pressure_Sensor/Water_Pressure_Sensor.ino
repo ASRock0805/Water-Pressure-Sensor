@@ -15,19 +15,19 @@
 #define N 800     // Measurment sampling number for smoothing
 
 /*--- Constants ---*/
-const unsigned long baudSpeed = 115200; // Sets the data rate in bits per second (baud) for serial data transmission
-const unsigned long period = 1000;      // The value is a number of milliseconds
+const unsigned long baudSpeed = 115200UL; // Sets the data rate in bits per second (baud) for serial data transmission
+const unsigned long period = 1000UL;      // The value is a number of milliseconds
 
-const byte vIn = 5;                                   // Supply voltage from Arduino
-const byte resBits = 10;                              // Resolution of ADC (10 bits)
-const float vConv = vIn / (pow(2.0, resBits) - 1.0);  // Voltage of ADC level (2^bits)
+const byte vIn = 5;                                             // Supply voltage from Arduino
+const byte resBits = 10;                                        // Resolution of ADC (10 bits)
+const float vConv = (float)(vIn / (pow(2.0, resBits) - 1.0f));  // Voltage of ADC level (2^bits)
 
 // Spec. of water pressure sensor, Range: 0 - 16 MPa, Output: 0.5 - 4.5 V
-const float pgMax = 16.0;             // Upper limit of pressure sensor
-const float pgMin = 0.0;              // Lower limit of pressure sensor
-const float pgVmax = 4.5;             // Maximum output voltage of pressure sensor
-const float pgVmin = 0.5;             // Minimum output voltage of pressure sensor
-const float offSet = 0.471772766113;  // Norminal value is 0.5 V
+const float pgMax = 16.0f;             // Upper limit of pressure sensor
+const float pgMin = 0.0f;              // Lower limit of pressure sensor
+const float pgVmax = 4.5f;             // Maximum output voltage of pressure sensor
+const float pgVmin = 0.5f;             // Minimum output voltage of pressure sensor
+const float offSet = 0.471772766113f;  // Norminal value is 0.5 V
 
 /*--- Global Variables ---*/
 unsigned long startTime;    // Start time
@@ -50,13 +50,13 @@ float getwaterPres(float volt) {
 
 // Water Pressure Sensor
 void waterPressure(byte signalPin) {
-  for (unsigned int i = 0; i < N; ++i) {    // Get samples for smooth the value
+  for (unsigned int i = 0UL; i < N; ++i) {    // Get samples for smooth the value
     vOut = vOut + analogRead(signalPin);
-    delay(1);                               // delay in between reads for stability
+    delay(1);                                 // delay in between reads for stability
   }
-  vOut = (vOut * vConv) / N;                // ADC of voltage meter output voltage
+  vOut = (vOut * vConv) / N;                  // ADC of voltage meter output voltage
 
-  waterPres = getwaterPres(vOut);           // Calculate water pressure
+  waterPres = getwaterPres(vOut);             // Calculate water pressure
 
   if (isinf(waterPres) || isnan(waterPres)) {
     waterPres = -1;
@@ -70,8 +70,8 @@ void setup(void) {
   startTime = millis();     // Initial start time
   
   // Water Pressure Sensor Initialization
-  vOut = 0.0;
-  waterPres = 0.0;
+  vOut = 0.0f;
+  waterPres = 0.0f;
 }
 
 /*--- Measurement ---*/
