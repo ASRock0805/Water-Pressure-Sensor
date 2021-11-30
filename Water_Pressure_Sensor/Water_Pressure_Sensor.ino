@@ -50,7 +50,7 @@ float getwaterPres(float volt) {
 
 // Water Pressure Sensor
 void waterPressure(byte signalPin) {
-  for (unsigned int i = 0UL; i < N; ++i) {      // Get samples for smooth the value
+  for (unsigned int i = 0U; i < N; ++i) {      // Get samples for smooth the value
     vOut = vOut + analogRead(signalPin);
     delay(1UL);                                 // delay in between reads for stability
   }
